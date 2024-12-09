@@ -1,5 +1,5 @@
 #include <stdio.h>  // For standard input/output functions
-#include <stdlib.h>  // For general utilities such as memory allocation 
+#include <stdlib.h>  // For general utilities such as memory allocation
 #include <string.h>  // For string manipulation functions
 #include <ctype.h>   // For handling character-related functions like checking or converting case
 #include "contactManagement.h"  // For Contact structure and related functions
@@ -32,7 +32,7 @@ char *caseInsensitiveStrStr(const char *haystack, const char *needle) {
 
     // Allocate memory for lowercase versions of haystack and needle
     // The + 1 is for the null terminator at the end of strings
-    char *haystack_lower = malloc(hay_len + 1); 
+    char *haystack_lower = malloc(hay_len + 1);
     char *needle_lower = malloc(nee_len + 1);
 
     // Check if memory allocation was successful and if not, then clean up and exit
@@ -49,7 +49,7 @@ char *caseInsensitiveStrStr(const char *haystack, const char *needle) {
     // Convert needle to lowercase for the same reason
     for (size_t i = 0; i <= nee_len; i++)
         needle_lower[i] = (char)tolower((unsigned char)needle[i]);
-    
+
     // use strstr To find the substring in lowercase
     char *pos = strstr(haystack_lower, needle_lower);
     char *result = NULL; // This will hold the location of the match in the original haystack string
@@ -68,7 +68,7 @@ char *caseInsensitiveStrStr(const char *haystack, const char *needle) {
 
 int main() {
     struct Contact contacts[MAX_CONTACTS];  // Array to store up to MAX_CONTACTS contacts
-    int count = 0;  // Initialize the contact count to 0 
+    int count = 0;  // Initialize the contact count to 0
     loadContactsFromFile(contacts, &count); // Load existing contacts from a file
 
     int choice;  // Variable to store user's menu choice
@@ -82,7 +82,7 @@ int main() {
             continue; // Go back to the beginning of the loop and try again
         }
 
-        // Handle menu choices with a switch statement 
+        // Handle menu choices with a switch statement
         switch (choice) {
             case 1: addContact(contacts, &count); break;  // Add a new contact; calls the addContact function
             case 2: listContacts(contacts, count); break;  // List all contacts; calls the listContacts function
@@ -92,8 +92,8 @@ int main() {
             case 0: // User wants to exit
                 printf("Exiting the program. Goodbye!\n");
                 saveContactsToFile(contacts, count);  // Save contacts to a file before exiting
-                return 0;  // Exit the program 
-            default: 
+                return 0;  // Exit the program
+            default:
                 printf("Invalid choice! Please enter a valid option.\n");   // Invalid menu choice
         }
     }
@@ -200,8 +200,8 @@ void addContact(struct Contact contacts[], int *count) {
     // Loop until we get a valid email
     while (!validEmail) {
         printf("Enter email: ");
-        fgets(contact->email, sizeof(contact->email), stdin); // Takes input 
-        contact->email[strcspn(contact->email, "\n")] = 0;   // Remove newline character 
+        fgets(contact->email, sizeof(contact->email), stdin); // Takes input
+        contact->email[strcspn(contact->email, "\n")] = 0;   // Remove newline character
 
         // Check if the entered email is empty
         if (strlen(contact->email) == 0) {
@@ -211,7 +211,7 @@ void addContact(struct Contact contacts[], int *count) {
 
         // Simple check to ensure both '@' and '.' are present in the email
         if (strchr(contact->email, '@') != NULL && strchr(contact->email, '.') != NULL) {
-            validEmail = 1; // Email is valid 
+            validEmail = 1; // Email is valid
         } else {
             printf("Invalid email! Email must contain both '@' and '.'.\n");
         }
@@ -221,7 +221,7 @@ void addContact(struct Contact contacts[], int *count) {
     printf("Contact added successfully!\n");
 }
 
-// List all contacts in the address book 
+// List all contacts in the address book
 void listContacts(struct Contact contacts[], int count) {
     // Check if there are any contacts to display
     if (count == 0) {
@@ -316,8 +316,8 @@ void editContact(struct Contact contacts[], int count) {
             contacts[i].name[strcspn(contacts[i].name, "\n")] = 0; // Remove newline from the name
 
             printf("New Phone: ");
-            fgets(contacts[i].phone, sizeof(contacts[i].phone), stdin); // Read new phone as string 
-            contacts[i].phone[strcspn(contacts[i].phone, "\n")] = 0;     // Remove trailing newline 
+            fgets(contacts[i].phone, sizeof(contacts[i].phone), stdin); // Read new phone as string
+            contacts[i].phone[strcspn(contacts[i].phone, "\n")] = 0;     // Remove trailing newline
 
             printf("New Address: ");
             fgets(contacts[i].address, sizeof(contacts[i].address), stdin); // Read the new address
@@ -341,7 +341,7 @@ void deleteContact(struct Contact contacts[], int *count) {
     fgets(name, sizeof(name), stdin); // Read the name from the user
     name[strcspn(name, "\n")] = 0; // Remove newline from the name
 
-    // Find and delete the contact 
+    // Find and delete the contact
     for (int i = 0; i < *count; i++) {
         // If the contact is found (case-insensitive comparision)
         if (strcasecmp(contacts[i].name, name) == 0) {
